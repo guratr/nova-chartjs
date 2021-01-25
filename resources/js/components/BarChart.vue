@@ -21,6 +21,7 @@
     </card>
 </template>
 
+
 <style>
   @import '../../css/main.css';
 </style>
