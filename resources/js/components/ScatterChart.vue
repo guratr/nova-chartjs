@@ -12,7 +12,7 @@
         </a>
       </div>
       <h4 class="chart-js-dashboard-title">{{ checkTitle }}</h4>
-      <line-chart :chart-data="datacollection" :options="options"></line-chart>
+      <line-chart :chart-data="datacollection" :options="options" :height="options && !isNaN(options.height) ? options.height : 67"></line-chart>
     </card>
 </template>
 
@@ -123,7 +123,7 @@
           this.options = this.options;
         } else {
         // Use Model
-          Nova.request().get("/coroowicaksono/check-data/endpoint/", {
+          Nova.request().get("/nova-vendor/coroowicaksono/check-data/endpoint/", {
             params: {
                 model: this.card.model,
                 series: this.card.series,

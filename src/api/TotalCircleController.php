@@ -22,6 +22,7 @@ class TotalCircleController extends Controller
         if ($request->input('model')) {
             $request->merge(['model' => urldecode($request->input('model'))]);
         }
+        $dateColumn = isset($request->options) ? json_decode($request->options, true)['dateColumn'] ?? 'created_at' : 'created_at';
         $showTotal = isset($request->options) ? json_decode($request->options, true)['showTotal'] ?? true : true;
         $advanceFilterSelected = isset($request->options) ? json_decode($request->options, true)['advanceFilterSelected'] ?? false : false;
         $dataForLast = isset($request->options) ? json_decode($request->options, true)['latestData'] ?? 3 : 3;
@@ -30,7 +31,7 @@ class TotalCircleController extends Controller
         $model = $request->input('model');
 		$modelInstance = new $model;
 		$tableName = $modelInstance->getConnection()->getTablePrefix() . $modelInstance->getTable();
-		$xAxisColumn = $request->input('col_xaxis') ?? DB::raw($tableName.'.created_at');
+		$xAxisColumn = $request->input('col_xaxis') ?? DB::raw($tableName.".$dateColumn");
         $cacheKey = hash('md4', $model . (int)(bool)$request->input('expires'));
         $dataSet = Cache::get($cacheKey);
         if (!$dataSet) {

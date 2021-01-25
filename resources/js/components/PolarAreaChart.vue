@@ -17,7 +17,7 @@
         </select>
       </div>
       <h4 class="chart-js-dashboard-title">{{ checkTitle }}</h4>
-      <line-chart :chart-data="datacollection" :options="options"></line-chart>
+      <line-chart :chart-data="datacollection" :options="options" :height="options && !isNaN(options.height) ? options.height : 110"></line-chart>
     </card>
 </template>
 
@@ -204,7 +204,7 @@
           if(this.showAdvanceFilter == true) this.card.options.advanceFilterSelected = this.advanceFilterSelected != undefined ? this.advanceFilterSelected : false;
           
           // Use Model
-          Nova.request().get("/coroowicaksono/check-data/circle-endpoint/", {
+          Nova.request().get("/nova-vendor/coroowicaksono/check-data/circle-endpoint/", {
             params: {
                 model: this.card.model,
                 series: this.card.series,
