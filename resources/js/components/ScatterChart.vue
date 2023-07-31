@@ -14,7 +14,7 @@
         </default-button>
       </div>
     </div>
-    <line-chart v-if="!loading" :chart-data="datacollection" :options="options"></line-chart>
+    <line-chart v-if="!loading" :chart-data="datacollection" :options="options" :height="card.options && !isNaN(card.options.height) ? card.options.height : 67"></line-chart>
   </loading-card>
 </template>
 

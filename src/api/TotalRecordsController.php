@@ -23,6 +23,7 @@ class TotalRecordsController extends Controller
         if ($request->input('model')) {
             $request->merge(['model' => urldecode($request->input('model'))]);
         }
+        $dateColumn = isset($request->options) ? json_decode($request->options, true)['dateColumn'] ?? 'created_at' : 'created_at';
         $showTotal = isset($request->options) ? json_decode($request->options, true)['showTotal'] ?? true : true;
         $totalLabel = isset($request->options) ? json_decode($request->options, true)['totalLabel'] ?? 'Total' : 'Total';
         $chartType = $request->type ?? 'bar';
@@ -39,7 +40,7 @@ class TotalRecordsController extends Controller
         $modelInstance = new $model;
         $connectionName = $modelInstance->getConnection()->getDriverName();
         $tableName = $modelInstance->getConnection()->getTablePrefix() . $modelInstance->getTable();
-        $xAxisColumn = $request->input('col_xaxis') ?? DB::raw($tableName.'.created_at');
+        $xAxisColumn = $request->input('col_xaxis') ?? DB::raw($tableName.".$dateColumn");
         $cacheKey = hash('md4', $model . (int)(bool)$request->input('expires'));
         $dataSet = Cache::get($cacheKey);
         if (!$dataSet) {
