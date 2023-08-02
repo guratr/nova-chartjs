@@ -40,7 +40,7 @@ class TotalRecordsController extends Controller
         $modelInstance = new $model;
         $connectionName = $modelInstance->getConnection()->getDriverName();
         $tableName = $modelInstance->getConnection()->getTablePrefix() . $modelInstance->getTable();
-        $xAxisColumn = $request->input('col_xaxis') ?? DB::raw($tableName.".$dateColumn");
+        $xAxisColumn = $request->input('col_xaxis') ?? DB::raw($tableName.".$dateColumn")->getValue(DB::connection()->getQueryGrammar());
         $cacheKey = hash('md4', $model . (int)(bool)$request->input('expires'));
         $dataSet = Cache::get($cacheKey);
         if (!$dataSet) {
